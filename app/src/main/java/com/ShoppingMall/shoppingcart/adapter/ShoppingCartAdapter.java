@@ -23,6 +23,7 @@ import butterknife.InjectView;
 
 /**
  * Created by 情v枫 on 2017/2/28.
+ *
  */
 
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.MyViewHolder> {

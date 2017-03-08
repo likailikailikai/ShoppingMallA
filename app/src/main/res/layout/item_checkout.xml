@@ -2,23 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <!--线性布局-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
-
-        <CheckBox
-            android:clickable="false"
-            android:id="@+id/cb_gov"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:button="@drawable/checkbox_selector"
-            />
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/iv_gov"
@@ -31,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -43,38 +35,20 @@
                 android:textColor="#404040"
                 android:textSize="14sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_price_gov"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_price_gov"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="￥0.0"
-                    android:textColor="#f00"
-                    android:textSize="10sp" />
-
-                <com.ShoppingMall.shoppingcart.view.AddSubView
-                    android:id="@+id/addSubView"
-                    android:layout_width="120dp"
-                    app:value="1"
-                    app:minValue="1"
-                    app:maxValue="15"
-                    app:numberAddBackground="@drawable/goods_add_btn"
-                    app:numberSubBackground="@drawable/goods_sub_btn"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                android:layout_marginTop="10dp"
+                android:text="￥0.0"
+                android:textColor="#f00"
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 
     <!--线-->
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.6dp"
+        android:layout_height="2dp"
         android:background="#22000000" />
 </LinearLayout>

@@ -41,7 +41,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
         android:name=".MApplication"
         android:allowBackup="true"
@@ -75,7 +74,9 @@
         <activity android:name=".app.LoginActivity" />
         <activity android:name=".home.activity.GoodsListActivity" />
         <activity android:name=".app.QrcodeGenerator" />
-        <activity android:name=".app.SearchActivity"></activity>
+        <activity android:name=".app.SearchActivity" />
+        <activity android:name=".shoppingcart.activity.PaymentActivtiy"></activity>
+        <activity android:name=".shoppingcart.activity.UpdateAddressActivity"></activity>
     </application>
 
 </manifest>

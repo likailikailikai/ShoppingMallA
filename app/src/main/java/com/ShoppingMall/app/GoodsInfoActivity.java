@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,15 +29,22 @@ import com.ShoppingMall.MainActivity;
 import com.ShoppingMall.R;
 import com.ShoppingMall.home.adapter.HomeAdapter;
 import com.ShoppingMall.home.bean.GoodsBean;
+import com.ShoppingMall.home.bean.HomeBean;
 import com.ShoppingMall.shoppingcart.utils.CartStorage;
 import com.ShoppingMall.shoppingcart.view.AddSubView;
 import com.ShoppingMall.utils.Constants;
 import com.ShoppingMall.utils.VirtualkeyboardHeight;
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 import static com.ShoppingMall.R.id.ll_root;
 
@@ -89,6 +97,12 @@ public class GoodsInfoActivity extends AppCompatActivity {
      */
     private GoodsBean goodsBean;
 
+    private String shareUrl;
+    /**
+     * 得到主页数据
+     */
+    private HomeBean.ResultEntity result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +117,100 @@ public class GoodsInfoActivity extends AppCompatActivity {
 //        Toast.makeText(this, "" + goodsBean.toString(), Toast.LENGTH_SHORT).show();
         goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
 
-        setData();
+        shareUrl = getIntent().getStringExtra(HomeAdapter.GOODS_BEAN);
+
+        if (!TextUtils.isEmpty(shareUrl)) {
+            //是扫描进来的
+            goodsBean = new GoodsBean();
+            goodsBean.setFigure(shareUrl);//图片地址
+            setShareData();
+
+        }else{
+            //默认正常点击
+            setData();
+        }
     }
+
+    private void setShareData() {
+        /**
+         * 重新联网请求数据
+         */
+        OkHttpUtils
+                .get()
+                .url(Constants.HOME_URL)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("TAG", "服务器异常,请重试" + e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("TAG", "联网成功");
+                        processData(response);
+                        findGoodsBean();
+                        setData();
+                    }
+
+
+                });
+    }
+
+    private void processData(String response) {
+        HomeBean homeBean = JSON.parseObject(response, HomeBean.class);
+        //得到resultBean的数据
+        result = homeBean.getResult();
+    }
+
+    private void findGoodsBean() {
+        List<HomeBean.ResultEntity.BannerInfoEntity> act_info = result.getBanner_info();
+        for (int i = 0; i < act_info.size(); i++) {
+            if (act_info.get(i).getImage().equals(shareUrl)) {
+                if (i == 0) {
+                    goodsBean.setName("尚硅谷在线课堂");
+                    goodsBean.setCover_price("320.00");
+                    goodsBean.setProduct_id("627");
+                } else if (i == 1) {
+                    goodsBean.setName("尚硅谷抢座");
+                    goodsBean.setCover_price("800.00");
+                    goodsBean.setProduct_id("21");
+                } else if (i == 2) {
+                    goodsBean.setName("尚硅谷讲座");
+                    goodsBean.setCover_price("150.00");
+                    goodsBean.setProduct_id("1341");
+                }
+
+            }
+        }
+        List<HomeBean.ResultEntity.HotInfoEntity> hot_info = result.getHot_info();
+        for (int i = 0; i < hot_info.size(); i++) {
+            if (hot_info.get(i).getFigure().equals(shareUrl)) {
+                goodsBean.setName(hot_info.get(i).getName());
+                goodsBean.setCover_price(hot_info.get(i).getCover_price());
+                goodsBean.setProduct_id(hot_info.get(i).getProduct_id());
+            }
+        }
+        List<HomeBean.ResultEntity.RecommendInfoEntity> recommend_info = result.getRecommend_info();
+        for (int i = 0; i < recommend_info.size(); i++) {
+            if (recommend_info.get(i).getFigure().equals(shareUrl)) {
+                goodsBean.setName(recommend_info.get(i).getName());
+                goodsBean.setCover_price(recommend_info.get(i).getCover_price());
+                goodsBean.setProduct_id(recommend_info.get(i).getProduct_id());
+            }
+        }
+        HomeBean.ResultEntity.SeckillInfoEntity seckill_info = result.getSeckill_info();
+        List<HomeBean.ResultEntity.SeckillInfoEntity.ListEntity> seckill_infoList = seckill_info.getList();
+        for (int i = 0; i < seckill_infoList.size(); i++) {
+            if (seckill_infoList.get(i).getFigure().equals(shareUrl)) {
+                goodsBean.setName(seckill_infoList.get(i).getName());
+                goodsBean.setCover_price(seckill_infoList.get(i).getCover_price());
+                goodsBean.setProduct_id(seckill_infoList.get(i).getProduct_id());
+            }
+        }
+    }
+
 
     private void setData() {
         //1、设置图片
@@ -199,7 +305,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 break;
             case R.id.tv_more_search:
 //                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(this, SearchActivity.class);
+                Intent intent1 = new Intent(this,SearchActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.tv_more_home:
