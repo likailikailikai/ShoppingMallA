@@ -5,6 +5,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.util.Date;
+
 /**
  * Created by 情v枫 on 2017/3/8.
  * <p>
@@ -24,9 +26,11 @@ public class Shopping {
         this.id = id;
         this.name = name;
     }
+
     @Generated(hash = 1564781055)
     public Shopping() {
     }
+
     public Long getId() {
         return this.id;
     }

@@ -1,72 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".app.SearchActivity">
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#ff3097fd"
+        android:layout_height="55dp"
+        android:background="#ed3f3f"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
 
-        <EditText
-            android:id="@+id/et_search"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/tv_search_selector"
-            android:clickable="true"
-            android:drawableLeft="@drawable/tv_search_drawable"
-            android:drawablePadding="5dp"
-            android:hint="搜索..."
-            android:textColor="@drawable/tv_search_textcolor" />
+            android:layout_weight="1">
 
 
-        <ImageView
-            android:id="@+id/iv_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/voice_empty" />
+            <EditText
+                android:id="@+id/tv_search"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:lines="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/search_home_shape"
+                android:drawableLeft="@drawable/home_search_icon"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:hint="输入搜索信息"
+                android:padding="5dp"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/iv_search_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/tv_search"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:clickable="true"
+                android:src="@drawable/voice_empty" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_search"
+            android:id="@+id/tv_search_go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:clickable="true"
             android:text="搜索"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
+
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_detele"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="清除历史记录"
-            android:layout_gravity="center"/>
+            android:layout_marginLeft="10dp"
+            android:text="热搜"
+            android:textColor="#ff000000"
+            android:textSize="18sp" />
+
+        <HorizontalScrollView
+            android:id="@+id/hsl_hot_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/ll_hot_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="left"
+            android:text="历史记录"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <ListView
-            android:id="@+id/listview"
+            android:id="@+id/lv_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        </ListView>
 
-    </FrameLayout>
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="230dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_clear_selector"
+            android:text="清除记录"
+            android:textColor="#ff0000" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

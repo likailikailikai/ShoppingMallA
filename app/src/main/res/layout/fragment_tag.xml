@@ -1,15 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".type.fragment.TagFragment">
+    >
 
-
-    <GridView
-        android:id="@+id/gv_tag"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3" />
+        android:layout_height="match_parent">
 
+        <com.ShoppingMall.type.view.FlowLayout
+            android:id="@+id/fl_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#55aaaaaa" />
+    </ScrollView>
 </LinearLayout>
+
